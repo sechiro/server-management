@@ -6,8 +6,8 @@ import os
 
 # import fabric tasks
 import init_user
-import deploy
-import mw
+import vmware
+import os_init
 
 env.roledefs={"server":["webserver.local"],"workstation":["10.10.10.10"]}
 
