@@ -2,16 +2,13 @@
 from fabric import api
 from fabric.api import run, sudo, put, env
 from fabric.decorators import hosts, roles, task
+import init_user
 import deploy
 import cdh
 import cdh_deploy
 import os
 
 env.roledefs={"server":["webserver.local"],"workstation":["10.10.10.10"]}
-
-@task
-def centos6():
-    env.ostype = 'centos6'
 
 @hosts('10.0.0.1')
 def printenv():
