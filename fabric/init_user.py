@@ -46,6 +46,8 @@ def add_sudoers(group='%wheel'):
         print 'The sudoers setting of wheel group exists already.'
         print result.stdout
 
+    local('rm %s' % tempfile )
+
 @task
 def check_sudoers(group='%wheel',conf='/etc/sudoers.d/wheel_nopass'):
     with settings(warn_only=True):
@@ -55,6 +57,7 @@ def check_sudoers(group='%wheel',conf='/etc/sudoers.d/wheel_nopass'):
 
 @task(default=True)
 def full_deploy(user='sechiro'):
+    """ fab init_user:user=sechiro """
     adduser(user)
     groupadd(user)
     passwd(user)

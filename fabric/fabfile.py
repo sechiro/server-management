@@ -2,11 +2,12 @@
 from fabric import api
 from fabric.api import run, sudo, put, env
 from fabric.decorators import hosts, roles, task
+import os
+
+# import fabric tasks
 import init_user
 import deploy
-import cdh
-import cdh_deploy
-import os
+import mw
 
 env.roledefs={"server":["webserver.local"],"workstation":["10.10.10.10"]}
 
