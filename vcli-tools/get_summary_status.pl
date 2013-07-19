@@ -4,7 +4,9 @@ use warnings;
 use VMware::VIRuntime;
 use JSON;
 
-# usage ./get_summary_status.pl --server 192.168.11.150
+# usage:
+# source creds/defaultrc
+# ./get_summary_status.pl --server 192.168.11.150
 my $help_message = "Display type: summary, network, all (default)";
 my %opts = (
       display => {
