@@ -1,0 +1,9 @@
+#!/bin/bash
+export VI_USERNAME=sample
+export VI_PASSWORD=password
+
+
+# User settings
+if [ -e `dirname $BASH_SOURCE`/userrc ];then
+    source `dirname $BASH_SOURCE`/userrc
+fi

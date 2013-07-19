@@ -1,0 +1,17 @@
+--- vmware-install.pl	2013-07-19 05:55:56.862840936 +0900
++++ vmware-install.pl.new	2013-07-19 05:55:36.014253135 +0900
+@@ -2484,10 +2484,10 @@
+          print wrap("ftp_proxy not set. please set environment variable 'ftp_proxy' e.g. export ftp_proxy=http://myproxy.mydomain.com:0000 . \n\n", 0);
+       }
+ 
+-      if ( !( $ftpproxy && $httpproxy)) {
+-         uninstall_file($gInstallerMainDB);
+-         exit 1;
+-      }
++      #if ( !( $ftpproxy && $httpproxy)) {
++      #   uninstall_file($gInstallerMainDB);
++      #   exit 1;
++      #}
+ 
+       require CPAN;
+       no warnings;

@@ -1,0 +1,3 @@
+#!/bin/bash
+export VI_USERNAME=root
+export VI_PASSWORD=homuhomu
