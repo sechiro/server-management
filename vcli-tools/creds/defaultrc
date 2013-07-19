@@ -1,9 +1,12 @@
 #!/bin/bash
 export VI_USERNAME=sample
 export VI_PASSWORD=password
+export PERL_LWP_SSL_VERIFY_HOSTNAME=0
 
+VCLI_PATH=/usr/lib/vmware-vcli/apps
 
 # User settings
 if [ -e `dirname $BASH_SOURCE`/userrc ];then
     source `dirname $BASH_SOURCE`/userrc
 fi
+
