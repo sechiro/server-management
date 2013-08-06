@@ -34,10 +34,10 @@ sub json_dumper{
     $Data::Dumper::Terse = 1;   # evalするための、最初の「$VAR =」は不要
     $Data::Dumper::Pair = ":";  # ハッシュの区切り文字
     $Data::Dumper::Bless = "";
-    my $output = Dumper($target);
-    $output =~ s/\(//g;
-    $output =~ s/\)//g;
-    return $output;
+    my $_output = Dumper($target);
+    $_output =~ s/\(//g;
+    $_output =~ s/\)//g;
+    return $_output;
 }
 
 # Obtain all inventory objects of the specified type
@@ -53,26 +53,35 @@ foreach my $entity_view (@$entity_views) {
 
     my $net_info_list = $entity_view->guest->net;
     my $net_info_json;
-    for my $net_info (@$net_info_list){
-        $net_info_json = json_dumper($net_info);
-        $net_info_json =~ s/'NetIpConfigInfoIpAddress' ,*//g;
-        $net_info_json =~ s/, *'NetIpConfigInfo'//g;
-        $net_info_json =~ s/, *]}/ ]}/g;
-        $net_info_json =~ s/, *'GuestNicInfo'//g;
-        $net_info_json =~ s/, *'NetDnsConfigInfo'//g;
+    my $output = "";
+    if ( $display_type eq "all" or $display_type eq "network" ){
+        $output = "{\"network\":[";
+        for my $net_info (@$net_info_list){
+            $net_info_json = json_dumper($net_info);
+            $net_info_json =~ s/'NetIpConfigInfoIpAddress' ,*//g;
+            $net_info_json =~ s/, *'NetIpConfigInfo'//g;
+            $net_info_json =~ s/, *]}/ ]}/g;
+            $net_info_json =~ s/, *'GuestNicInfo'//g;
+            $net_info_json =~ s/, *'NetDnsConfigInfo'//g;
+                $net_info_json = defined($net_info_json) ? $net_info_json : '"No guest network information"' ;
+                #print $net_info_json;
+                $output .= $net_info_json;
+                $output .= ",";
+        }
+        $output =~ s/,$//;
+        $output .= "],\"name\":\"$entity_name\"}\n";
+        print $output;
     }
 
     # Output
     if ( $display_type eq "all" or $display_type eq "summary" ){
-        print "{\"$entity_name\":";
-        print $summary_json;
-        print "}\n";
-    }
-    if ( $display_type eq "all" or $display_type eq "network" ){
-        print "{\"$entity_name\":";
-        $net_info_json = defined($net_info_json) ? $net_info_json : '"No guest network information"' ;
-        print $net_info_json;
-        print "}\n";
+        $output = "{\"summary\":";
+        $output .= $summary_json;
+        $output .= ",\"name\":\"$entity_name\"}\n";
+        print $output;
+        #   print "{\"$entity_name\":";
+        #   print $summary_json;
+        #   print "}\n";
     }
 }
 # Disconnect from the server
